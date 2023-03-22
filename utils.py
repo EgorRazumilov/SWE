@@ -6,10 +6,10 @@ def _nearest_metric(u, v, s=None, dists=None, clusters=None):
         pairwise_dst = np.linalg.norm(u[:, None, :] - v[None, :, :], axis=-1)
         return pairwise_dst.min()
 
-    alpha_u = 0
-    alpha_v = 0
-    beta = 0
-    gamma = 0
+    alpha_u = -1
+    alpha_v = -1
+    beta = -1
+    gamma = -1
 
     return alpha_u * dists[u, s] + \
            alpha_v * dists[v, s] + \
@@ -36,8 +36,8 @@ def _group_mean_metric(u, v, s=None, dists=None, clusters=None):
         pairwise_dst = np.linalg.norm(u[:, None, :] - v[None, :, :], axis=-1)
         return pairwise_dst.sum() / len(u) / len(v)
 
-    alpha_u = len(clusters[u]) / len(clusters[u] + clusters[v])
-    alpha_v = len(clusters[v]) / len(clusters[u] + clusters[v])
+    alpha_u = 0
+    alpha_v = 0
 
     return alpha_u * dists[u, s] + \
            alpha_v * dists[v, s]
@@ -49,8 +49,8 @@ def _center_mean_metric(u, v, s=None, dists=None, clusters=None):
         center2 = v.mean(0)
         return np.linalg.norm(center1 - center2)
 
-    alpha_u = len(clusters[u]) / len(clusters[u] + clusters[v])
-    alpha_v = len(clusters[v]) / len(clusters[u] + clusters[v])
+    alpha_u = 0
+    alpha_v = 0
     beta = -alpha_u * alpha_v
 
     return alpha_u * dists[u, s] + \
@@ -73,9 +73,7 @@ def _ward_metric(u, v, s=None, dists=None, clusters=None):
     beta = -len(clusters[s]) / \
            (len(clusters[s]) + len(clusters[u]) + len(clusters[v]))
 
-    return alpha_u * dists[u, s] + \
-           alpha_v * dists[v, s] + \
-           beta * dists[u, v]
+    return 1
 
 
 class LanceWilliamsClustering:
