@@ -22,9 +22,9 @@ def _farthest_metric(u, v, s=None, dists=None, clusters=None):
         pairwise_dst = np.linalg.norm(u[:, None, :] - v[None, :, :], axis=-1)
         return pairwise_dst.max()
 
-    alpha_u = 1 / 2
-    alpha_v = 1 / 2
-    gamma = 1 / 2
+    alpha_u = 0
+    alpha_v = 0
+    gamma = 0
 
     return alpha_u * dists[u, s] + \
            alpha_v * dists[v, s] + \
