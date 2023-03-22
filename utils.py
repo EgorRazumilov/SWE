@@ -73,9 +73,7 @@ def _ward_metric(u, v, s=None, dists=None, clusters=None):
     beta = -len(clusters[s]) / \
            (len(clusters[s]) + len(clusters[u]) + len(clusters[v]))
 
-    return alpha_u * dists[u, s] + \
-           alpha_v * dists[v, s] + \
-           beta * dists[u, v]
+    return 1
 
 
 class LanceWilliamsClustering:
